@@ -1,5 +1,5 @@
 def label = "worker-${UUID.randomUUID().toString()}"
-
+echo '00000'
 // Slack 알림
 
 podTemplate(label: label, containers: [
@@ -15,6 +15,7 @@ containerTemplate(name: 'kubectl', image: 'roffe/kubectl', command: 'cat', ttyEn
 
 	// 예외처리 구문
 	try {
+echo '0000011111'
 		// Slack - 빌드 시작시
 
 		// #1 Github 소스 가져오기
