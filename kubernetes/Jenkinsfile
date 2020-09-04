@@ -1,6 +1,15 @@
 def label = "worker-${UUID.randomUUID().toString()}"
 echo '00000'
+
 // Slack 알림
+def notifySlack(STATUS, COLOR) {
+	slackSend channel: '#jankins-alarm-test', message: STATUS+" : " +
+	"${env.JOB_NAME}[${env.BUILD_NUMBER}] (${env.BUILD_URL})", color: COLOR,
+	tokenCredentialId: 'Slack-lab14', teamDomain: 'ibm-teck'
+}
+
+notifySlack("STARTED", "#0000FF")
+
 
 podTemplate(label: label, containers: [
 // #0 필요한 Pod생성
@@ -84,11 +93,11 @@ echo '0000011111'
 		}
 
 		// Slack - 빌드 성공시
-
+		notifySlack("SUCCESS", "#00FF00")
 
 	} catch(e) {
 		// Slack - 빌드 실패시
-
+		notifySlack("FAILED", "#FF0000")
 	}
   }
 }
